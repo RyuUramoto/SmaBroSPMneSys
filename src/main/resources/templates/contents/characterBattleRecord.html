@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="./layout/layout :: base_header('戦績登録',~{::link})">
+  <link rel="stylesheet" th:href="@{/js/characterBattleRecord.js}">
+</head>
+		
+<body>
+	<!-- 共通ヘッダ -->
+	<div th:replace="./layout/layout :: header"></div>
+
+	<div class="container">
+		<div class="row">
+			<h1 class="title" th:text="${chara.charaName}"></h1>
+		</div>	
+		
+		<div class="row">
+		
+		</div>
+		
+		<form action="/characterBattleRecord/postRecord" method="post">
+			<div>
+		    	<input type="hidden" name="usedCharaId" th:value="${chara.charaId}" />
+		
+				<select id="enemyCharaId" name="enemyCharaId">
+					<option th:each="item : ${charaList}" th:value="${item.charaId}" th:text="${item.charaName}" >enemyCharaId</option>
+				</select>
+		
+				<input type="radio" name="winOrLose" value="1" checked="checked">勝
+				<input type="radio" name="winOrLose" value="0">負
+				
+				<input type="radio" name="rankMatchFlag" value="1" checked="checked">ランクマッチ
+				<input type="radio" name="rankMatchFlag" value="0">専用部屋
+				
+				<button>送信</button>			
+				
+			</div>
+		</form>
+		
+		<!-- キャラ選択	 -->
+		<div class="row flex-container">
+			 <div class="col-1" th:each="chara : ${charaList}" th:object="${chara}">
+				<div th:id="'chara-image-' + *{charaId}" class="image-wrap image-button">
+					<img class="image-button" th:src="@{*{iconPath}}">
+				</div>			
+		    </div>
+		</div>
+
+		<!-- 勝敗ボタン -->
+		<div class="row" style="justify-content: center;">
+			
+			<div class="col-3" style="background-color:red;">
+				<form action="/characterBattleRecord/postRecord" method="post">
+					<div>
+				    	<input type="hidden" name="usedCharaId" th:value="${chara.charaId}" />
+				    	<input type="" name="enemyCharaId" id="enemyCharaId-win" value="" />
+						<input type="hidden" name="winOrLose" value="1">
+						
+						<button>勝ち</button>							
+					</div>
+				</form>
+			</div>
+			
+			<div class="offset-1 col-3" style="background-color:blue;">
+				<form action="/characterBattleRecord/postRecord" method="post">
+					<div>
+				    	<input type="hidden" name="usedCharaId" th:value="${chara.charaId}" />
+				    	<input type="" name="enemyCharaId" id="enemyCharaId-lose" value="" />
+						<input type="hidden" name="winOrLose" value="0">
+						
+						<button>負け</button>							
+					</div>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+    
+	<!-- 共通フッター -->
+	<div th:replace="./layout/layout :: footer"></div>
+</body>
+
+<script>
+$('div[id^="chara-image-"]').on('click', function() {
+
+	var thisCharaButton = $(this);
+		
+	//  キャラボタンを選択状態にする
+	var images = $('div[id^="chara-image-"]'); 
+	images.each(function(i, element){
+		element.classList.remove("selected");
+	})
+	thisCharaButton.addClass("selected");
+		
+	//勝ちボタンと負けボタンに選択中のキャラIDを設定させる
+	var buttons = $('input[id^=enemyCharaId]');
+	console.log(buttons);
+	buttons.each(function(i, element){
+		element.value = thisCharaButton[0].id.replace("chara-image-", "");
+	})
+});
+</script>
+</html>

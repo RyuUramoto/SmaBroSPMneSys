@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="./layout/layout :: base_header('Home',~{::link})">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/js/app.js}">
+</head>
+
+<body>
+	<!-- 共通ヘッダ -->
+	<div th:replace="./layout/layout :: header"></div>
+
+	<div class="container">
+		<div class="row">
+			<h1 class="title">スマブラ戦績収集システムHOME</h1>
+		</div>
+
+		<div class="row flex-container">
+			<div class="col-2" style="border: 1px solid black"
+				th:each="chara : ${charaList}" th:object="${chara}">
+
+				<div class="row">
+					<div th:id="'chara-image-' + *{charaId}"
+						class="col-4 image-wrap image-button">
+						<img class="image-button" th:src="@{*{iconPath}}">
+					</div>
+
+					<div class="col-7">
+						<button>
+							<p th:text=*{charaName}></p>
+							<p>勝率：50%</p>
+							<p>対戦数：40</p>
+						</button>
+						<input type="hidden" name="charaId" th:value=*{charaId} />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4" style="border: 1px solid black">
+						a
+					</div>
+
+					<div class="col-4" style="border: 1px solid black">
+						b
+					</div>
+
+					<div class="col-4" style="border: 1px solid black">
+						c
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--     <table> -->
+	<!--         <thead> -->
+	<!--             <tr> -->
+	<!--                 <th>ID</th> -->
+	<!--                 <th>名前</th> -->
+	<!--                 <th>パスワード</th> -->
+	<!--                 <th>更新日時</th> -->
+	<!--                 <th>登録日時</th> -->
+	<!--             </tr> -->
+	<!--         </thead> -->
+	<!--         <tbody> -->
+	<!--             <tr th:each="user : ${userList}" th:object="${user}"> -->
+	<!--                 <td class="center" th:text="*{userId}"></td> -->
+	<!--                 <td th:text="*{userName}"></td> -->
+	<!--                 <td th:text="*{password}"></td> -->
+	<!--                 <td class="center" th:text="${#dates.format(user.updateDate, 'yyyy/MM/dd')}"></td> -->
+	<!--                 <td class="center" th:text="${#dates.format(user.createDate, 'yyyy/MM/dd')}"></td> -->
+	<!--             </tr> -->
+	<!--         </tbody> -->
+	<!--     </table> -->
+
+
+	<form action="/characterBattleRecord/charaHome"
+		th:each="chara : ${charaList}" th:object="${chara}">
+		<button>
+			<p th:text=*{charaName}></p>
+			<p>勝率：50%</p>
+			<p>対戦数：40</p>
+		</button>
+
+		<input type="hidden" name="charaId" th:value=*{charaId} />
+	</form>
+
+	</div>
+
+	<!-- 共通フッター -->
+	<div th:replace="./layout/layout :: footer"></div>
+</body>
+</html>
+
