@@ -10,13 +10,15 @@
 	<div th:replace="./layout/layout :: header"></div>
 
 	<div class="container">
+	    <table>
+            <tr th:if="${validationError}" th:each="error : ${validationError}">
+                <td style="color: red;" th:text="${error}"></td>
+            </tr>
+        </table>
+		
 		<div class="row">
 			<h1 class="title" th:text="${chara.charaName}"></h1>
 		</div>	
-		
-		<div class="row">
-		
-		</div>
 		
 		<form action="/characterBattleRecord/postRecord" method="post">
 			<div>
@@ -80,24 +82,6 @@
 	<div th:replace="./layout/layout :: footer"></div>
 </body>
 
-<script>
-$('div[id^="chara-image-"]').on('click', function() {
+<script th:src="@{/js/characterBattleRecord.js}"></script>
 
-	var thisCharaButton = $(this);
-		
-	//  キャラボタンを選択状態にする
-	var images = $('div[id^="chara-image-"]'); 
-	images.each(function(i, element){
-		element.classList.remove("selected");
-	})
-	thisCharaButton.addClass("selected");
-		
-	//勝ちボタンと負けボタンに選択中のキャラIDを設定させる
-	var buttons = $('input[id^=enemyCharaId]');
-	console.log(buttons);
-	buttons.each(function(i, element){
-		element.value = thisCharaButton[0].id.replace("chara-image-", "");
-	})
-});
-</script>
 </html>
