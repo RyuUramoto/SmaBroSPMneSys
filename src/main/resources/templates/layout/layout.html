@@ -2,7 +2,7 @@
 <!--引数の title, links は fragment expressions */-->
 <head th:fragment="base_header(title,links)">
   <!--/* 各ビュータイトル */-->
-  <title th:text="${title==null}? 'Spring boot de Hello world!' : ${title}">Spring boot de Hello world!</title>
+  <title th:text="${title==null}? '' : ${title}"></title>
  
   <!--/* 必ず読み込むファイル */-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -11,7 +11,6 @@
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/common.css}">
-  <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
  
  <meta charset="utf-8" />
  
